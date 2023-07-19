@@ -49,7 +49,6 @@ public class Enlace {
                     + "values ('%s', %s)", 
                     auto.obtenerPlaca(), 
                     auto.obtenerValorMatricula());
-            System.out.println(data);
             statement.executeUpdate(data);
             obtenerConexion().close();
         } catch (SQLException e) {  
@@ -74,7 +73,7 @@ public class Enlace {
                 lista.add(auto);
             }
             
-            obtenerConexion().close();
+            obtenerConexion().close(); 
         } catch (SQLException e) {  
              System.out.println("Exception: insertarCiudad");
              System.out.println(e.getMessage());  

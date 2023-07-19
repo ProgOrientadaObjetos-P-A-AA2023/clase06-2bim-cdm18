@@ -21,6 +21,8 @@ public class Enlace {
      * @return 
     */
     private Connection conn;
+    private ArrayList<Ciudad> lista = new ArrayList<>();
+
        
     public void establecerConexion() {  
 
@@ -46,7 +48,7 @@ public class Enlace {
   
         try{  
             establecerConexion();
-            Statement statement = obtenerConexion().createStatement();
+            Statement statement = obtenerConexion().createStatement(); // permite ejecutar codigo sql
             String data = String.format("INSERT INTO Ciudad (nombre, poblacion) "
                     + "values ('%s', %d)", ciudad.obtenerNombre(), 
                     ciudad.obtenerPoblacion());
@@ -59,8 +61,16 @@ public class Enlace {
         }  
     }
     
-    public ArrayList<Ciudad> obtenerDataCiudad() {  
-        ArrayList<Ciudad> lista = new ArrayList<>();
+    public void establecerLista(ArrayList<Ciudad> l){
+        lista = l;
+    }
+    
+    public ArrayList<Ciudad> obtenerLista(){
+        return lista;
+    }
+    
+    
+    public void obtenerDataCiudad() {  
         try{  
             establecerConexion();
             Statement statement = obtenerConexion().createStatement();
@@ -68,8 +78,8 @@ public class Enlace {
             
             ResultSet rs = statement.executeQuery(data);
             while(rs.next()){
-                Ciudad miCiudad = new Ciudad(rs.getString("nombre"),
-                rs.getInt("poblacion"));
+                Ciudad miCiudad = new Ciudad(rs.getString("nombre"), // nombre de la columna es "nombre"
+                rs.getInt("poblacion")); // nombre de la columna es "poblacion" y saca datos de esa columna
                 lista.add(miCiudad);
             }
             
@@ -79,7 +89,6 @@ public class Enlace {
              System.out.println(e.getMessage());  
              
         }  
-        return lista;
     }
      
 }  
